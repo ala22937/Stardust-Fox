@@ -1,0 +1,85 @@
+
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>夢狐星語</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      font-family: "微軟正黑體", sans-serif;
+      background-size: cover;
+      background-position: center;
+      transition: background-image 1s ease-in-out;
+    }
+    #overlay {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      z-index: 2;
+    }
+    #message {
+      position: absolute;
+      z-index: 3;
+      top: 40%;
+      width: 100%;
+      text-align: center;
+      color: white;
+      text-shadow: 0 0 10px #000;
+      font-size: 2em;
+    }
+    .sakura {
+      position: absolute;
+      width: 15px;
+      height: 15px;
+      background-image: url('https://i.imgur.com/3fJ1PqT.png');
+      background-size: cover;
+      pointer-events: none;
+      animation: fall linear infinite;
+    }
+    @keyframes fall {
+      0% { transform: translateY(-100px) rotate(0deg); opacity: 1; }
+      100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
+    }
+  </style>
+</head>
+<body>
+
+<div id="overlay" onclick="changeScene()"></div>
+<div id="message">點一下背景，夢會轉換場景</div>
+
+<script>
+  let scenes = [
+    "url('https://i.imgur.com/lB9XcOz.jpg')", // 夜櫻
+    "url('https://i.imgur.com/tE0YOnU.jpg')", // 花海
+    "url('https://i.imgur.com/IHFfTz7.jpg')"  // 紫櫻
+  ];
+  let current = 0;
+
+  function changeScene() {
+    current = (current + 1) % scenes.length;
+    document.body.style.backgroundImage = scenes[current];
+  }
+
+  function createPetals() {
+    for (let i = 0; i < 15; i++) {
+      let petal = document.createElement("div");
+      petal.classList.add("sakura");
+      petal.style.left = Math.random() * 100 + "vw";
+      petal.style.animationDuration = 5 + Math.random() * 5 + "s";
+      document.body.appendChild(petal);
+
+      setTimeout(() => petal.remove(), 10000);
+    }
+  }
+
+  document.body.style.backgroundImage = scenes[0];
+  setInterval(createPetals, 500);
+</script>
+
+</body>
+</html>
